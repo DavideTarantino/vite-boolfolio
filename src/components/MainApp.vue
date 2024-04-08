@@ -5,23 +5,35 @@ import axios, { HttpStatusCode } from 'axios';
     name: 'MainApp',
     data(){
       return{
-        arrayProjects: []
+        arrayProjects: [],
+        currentProject: '',
+        lastProject: '',
       }
     },
     methods: {
-      getProjects(){
+      getProjects(projectApiPage){
 
-        axios.get( 'http://127.0.0.1:8000/api/test' )
+        axios.get( 'http://127.0.0.1:8000/api/test',
+      
+          {
+            params:{
+              page: projectApiPage
+            }
+          }
+
+      )
         .then( res => {
-          console.log( res.data.projects )
+          console.log( res.data.projects.data )
 
-          this.arrayProjects = res.data.projects
+          this.arrayProjects = res.data.projects.data
+          this.currentProject = res.data.project.currentProject
+          this.lastProject = res.data.project.lastProject
         })
 
       }
     },
     mounted(){
-      this.getProjects()
+      this.getProjects(1)
     }
   }
 </script>
@@ -36,6 +48,22 @@ import axios, { HttpStatusCode } from 'axios';
         <a href="#">{{ element.name }}</a>
       </li>
     </ul>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" :class="{'disabled': currentProject === 1}">
+          <button class="page-link" @click="getProjects( currentProject - 1 )">Previous</button>
+        </li>
+
+        <li class="page-item" v-for="(element, index) in lastProject" :key="index">
+          <button class="page-link" @click="getProjects( element )">{{ element }}</button>
+        </li>
+
+        <li class="page-item" :class="{'disabled': currentProject === lastProject}">
+          <button class="page-link" @click="getProjects( currentProject + 1 )">Next</button>
+        </li>
+      </ul>
+  </nav>
   </main>
 
 </template>
