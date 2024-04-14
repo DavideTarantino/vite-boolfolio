@@ -6,8 +6,8 @@ import axios, { HttpStatusCode } from 'axios';
     data(){
       return{
         arrayProjects: [],
-        currentProject: '',
-        lastProject: '',
+        currentPage: '',
+        lastPage: '',
       }
     },
     methods: {
@@ -26,8 +26,8 @@ import axios, { HttpStatusCode } from 'axios';
           console.log( res.data.projects.data )
 
           this.arrayProjects = res.data.projects.data
-          this.currentProject = res.data.project.currentProject
-          this.lastProject = res.data.project.lastProject
+          this.currentPage = res.data.projects.current_page
+          this.lastPage = res.data.projects.last_page
         })
 
       }
@@ -51,16 +51,16 @@ import axios, { HttpStatusCode } from 'axios';
 
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <li class="page-item" :class="{'disabled': currentProject === 1}">
-          <button class="page-link" @click="getProjects( currentProject - 1 )">Previous</button>
+        <li class="page-item" :class="{'disabled': currentPage === 1}">
+          <button class="page-link" @click="getProjects( currentPage - 1 )">Previous</button>
         </li>
 
-        <li class="page-item" v-for="(element, index) in lastProject" :key="index">
+        <li class="page-item" v-for="(element, index) in lastPage" :key="index">
           <button class="page-link" @click="getProjects( element )">{{ element }}</button>
         </li>
 
-        <li class="page-item" :class="{'disabled': currentProject === lastProject}">
-          <button class="page-link" @click="getProjects( currentProject + 1 )">Next</button>
+        <li class="page-item" :class="{'disabled': currentPage === lastProject}">
+          <button class="page-link" @click="getProjects( currentPage + 1 )">Next</button>
         </li>
       </ul>
   </nav>
@@ -71,5 +71,12 @@ import axios, { HttpStatusCode } from 'axios';
 <style scoped>
   ul{
     list-style-type: none;
+  }
+
+  .pagination{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 </style>
