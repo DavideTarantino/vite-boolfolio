@@ -1,11 +1,10 @@
 <script>
-  //import MainApp from './components/MainApp.vue'
 
-  import AppHeader from './components/AppHeader.vue'
 
   export default{
+    name: 'ProjectList',
     components:{
-      AppHeader
+
     },
     data(){
       return{
@@ -22,9 +21,7 @@
 </script>
 
 <template>
-  <!-- <MainApp /> -->
-  <AppHeader/>
-  
+    <h1>progetti:</h1>
 </template>
 
 <style scoped>

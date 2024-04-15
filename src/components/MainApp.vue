@@ -28,8 +28,9 @@ import axios, { HttpStatusCode } from 'axios';
           this.arrayProjects = res.data.projects.data
           this.currentPage = res.data.projects.current_page
           this.lastPage = res.data.projects.last_page
+          
         })
-
+        
       }
     },
     mounted(){
